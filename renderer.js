@@ -860,36 +860,50 @@ class CircuitEditor {
             
             // Wenn bereits base64-Daten vorhanden sind (z.B. Fallback aus Browser-Ordner-Picker) verwenden,
             // ansonsten versuchen wir per Fetch relative Pfade zu laden.
-            let base64Data = component.base64Data || component.imageData;
-            if (!base64Data && component.path) {
+            // Priorisiere direkte Pfade (z.B. /Bauteile/foo.png) — ideal für statische Hosts wie GitHub Pages.
+            let base64Data = component.base64Data || component.imageData || null;
+
+            const img = new Image();
+            img.onload = () => {
+               // PNG-Mitte auf Grid-Punkt zentrieren (200px nach links/oben)
+               const comp = {
+                   x: gridX - 200, // 400px / 2
+                   y: gridY - 200, // 400px / 2
+                   width: 400,
+                   height: 400,
+                   rotation: 0, // Rotation in Grad
+                   image: img,
+                   imageData: base64Data, // Falls vorhanden für Undo/Redo speichern
+                   name: component.name
+               };
+
+               console.log(`Bauteil erstellt bei (${comp.x}, ${comp.y}) - Mitte bei (${gridX}, ${gridY})`);
+
+               this.components.push(comp);
+               this.redraw();
+               this.saveState(); // Nach Platzierung speichern
+            };
+
+            // Lade-Strategie:
+            // 1) Wenn component.path gesetzt ist, nutzen wir den Pfad (funktioniert auf GitHub Pages).
+            // 2) Ansonsten verwenden wir vorhandene Base64-Daten.
+            // 3) Falls noch nichts vorhanden ist, versuchen wir per Fetch Base64 zu erzeugen.
+            if (component.path) {
+                img.src = component.path;
+            } else if (base64Data) {
+                img.src = `data:image/png;base64,${base64Data}`;
+            } else if (component.path) {
+                // Sollte eigentlich durch erste Abfrage abgedeckt sein, zur Sicherheit handle.
+                img.src = component.path;
+            } else {
+                // Letzter Versuch: Base64 per Fetch besorgen
                 base64Data = await this.getBase64For(component);
+                if (!base64Data) {
+                    console.error('Fehler beim Laden des Bildes (keine Bilddaten gefunden)');
+                    return;
+                }
+                img.src = `data:image/png;base64,${base64Data}`;
             }
-             if (!base64Data) {
-                 console.error('Fehler beim Laden des Bildes (keine Bilddaten gefunden)');
-                 return;
-             }
- 
-             const img = new Image();
-             img.onload = () => {
-                // PNG-Mitte auf Grid-Punkt zentrieren (200px nach links/oben)
-                const comp = {
-                    x: gridX - 200, // 400px / 2
-                    y: gridY - 200, // 400px / 2
-                    width: 400,
-                    height: 400,
-                    rotation: 0, // Rotation in Grad
-                    image: img,
-                    imageData: base64Data, // Für Undo/Redo speichern
-                    name: component.name
-                };
-                
-                console.log(`Bauteil erstellt bei (${comp.x}, ${comp.y}) - Mitte bei (${gridX}, ${gridY})`);
-                
-                this.components.push(comp);
-                this.redraw();
-                this.saveState(); // Nach Platzierung speichern
-             };
-             img.src = `data:image/png;base64,${base64Data}`;
          } catch (error) {
              console.error('Fehler beim Platzieren des Bauteils:', error);
          }

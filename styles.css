@@ -1,0 +1,291 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    color: #333;
+    overflow: hidden;
+}
+
+body.dark {
+    filter: invert(100%);
+    background-color: #111;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header-left h1 {
+    color: #2c3e50;
+    font-size: 2rem;
+    font-weight: 300;
+    margin: 0;
+}
+
+.copyright {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-left: 15px;
+    font-weight: 400;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Abstand zwischen den Gruppen */
+}
+
+.header-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 8px; /* Kleinerer Abstand für die Edit-Buttons */
+}
+
+.header-buttons button,
+.header-buttons .load-button {
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.header-buttons button:hover,
+.header-buttons .load-button:hover {
+    background: #e0e0e0;
+    border-color: #999;
+}
+
+.header-buttons .load-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+main {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    height: calc(100vh - 120px);
+}
+
+.controls {
+    width: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.component-list {
+    margin-bottom: 20px;
+}
+
+.component-list h3 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+
+.component-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.component-item:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.component-item .name {
+    font-size: 14px;
+    flex: 1;
+}
+
+.folder-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.folder-item:hover {
+    background-color: #e8e8e8;
+}
+
+.folder-icon {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.folder-name {
+    flex: 1;
+    font-size: 14px;
+}
+
+.folder-count {
+    font-size: 12px;
+    color: #666;
+    background-color: #e0e0e0;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: normal;
+}
+
+.component-item.sub-item {
+    margin-left: 20px;
+    border-left: 2px solid #ddd;
+    padding-left: 10px;
+}
+
+.component-item img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    object-fit: contain;
+}
+
+.cable-item {
+    background: linear-gradient(135deg, #666 0%, #444 100%);
+    color: white;
+    border: 2px solid #444;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cable-item:hover {
+    background: linear-gradient(135deg, #555 0%, #333 100%);
+    border-color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+}
+
+.cable-item .name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cable-item .name::before {
+    content: "━";
+    font-size: 18px;
+    font-weight: bold;
+    color: #ccc;
+}
+
+.canvas-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: relative;
+    overflow: auto;
+    flex: 1;
+    min-height: 0;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#circuitCanvas {
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    cursor: crosshair;
+    display: block;
+    background-color: #fafafa;
+    transform-origin: top left;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.zoom-controls {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 101;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid #ddd;
+}
+
+.zoom-controls button {
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zoom-controls button:hover {
+    background: #e0e0e0;
+}
+
+.zoom-info {
+    font-weight: bold;
+    color: #333;
+    min-width: 50px;
+    text-align: center;
+    font-size: 14px;
+}

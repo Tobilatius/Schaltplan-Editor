@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schaltplan-Editor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>Schaltplan-Editor Web-Version</h1>
+                <span class="copyright">©Tobias Meitner</span>
+            </div>
+            <div class="header-right">
+                <div class="header-buttons">
+                    <button id="exportPNG">Export als png</button>
+                    <button id="saveProject">Projekt speichern</button>
+                    <!-- Load Folder zuerst, deutlich hervorgehoben -->
+                    <button id="loadFolder" style="
+                        background: #000;
+                        color: #fff;
+                        border: 1px solid #000;
+                        padding: 8px 12px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-weight: 700;
+                        margin-right: 8px;
+                    ">Bauteile laden</button>
+                    <!-- Projekt laden danach -->
+                    <label for="loadProject" class="load-button">
+                        Projekt laden
+                        <input type="file" id="loadProject" accept=".json" style="display: none;">
+                    </label>
+                </div>
+                <div class="header-buttons edit-buttons">
+                    <button id="textMode">📝 Text</button>
+                    <button id="deleteMode">🗑️ Löschen</button>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="controls">
+                <div class="component-list">
+                    <h3>Verfügbare Bauteile</h3>
+                    <div id="componentList"></div>
+                    <p style="font-size: 13px; margin-top: 10px;">
+                        <strong>Wichtig:</strong> Zum Laden der Bauteile klicke Ordner laden und wähle den Ordner <strong>Bauteile</strong> aus, sodass der Ordner hier angezeigt wird.
+                    </p>
+                </div>
+            </div>
+            <div class="canvas-container">
+                <canvas id="circuitCanvas"></canvas>
+            </div>
+        </main>
+    </div>
+    <script src="renderer.js"></script>
+</body>
+</html>

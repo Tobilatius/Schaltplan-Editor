@@ -1,0 +1,73 @@
+[
+  { "name": "Batterie", "path": "Bauteile/Batterie.png", "isFolder": false },
+  { "name": "Knotenpunkt", "path": "Bauteile/Knotenpunkt.png", "isFolder": false },
+  { "name": "Messpunkt", "path": "Bauteile/Messpunkt.png", "isFolder": false },
+  { "name": "Kondensator", "path": "Bauteile/Kondensator.png", "isFolder": false },
+  { "name": "Schalter", "path": "Bauteile/Schalter.png", "isFolder": false },
+  { "name": "Spannungsquelle Gleichstrom", "path": "Bauteile/Spannungsquelle Gleichstrom.png", "isFolder": false },
+  { "name": "Widerstand", "path": "Bauteile/Widerstand.png", "isFolder": false },
+  { "name": "Überleitung", "path": "Bauteile/Überleitung.png", "isFolder": false },
+  {
+    "name": "Dioden und Transistoren",
+    "path": "Bauteile/Dioden und Transistoren",
+    "isFolder": true,
+    "components": [
+      { "name": "Diode", "path": "Bauteile/Dioden und Transistoren/Diode.png", "isFolder": false },
+      { "name": "FET Transistor 2", "path": "Bauteile/Dioden und Transistoren/FET Transistor 2.png", "isFolder": false },
+      { "name": "FET Transistor", "path": "Bauteile/Dioden und Transistoren/FET Transistor.png", "isFolder": false },
+      { "name": "NPN Transistor 2", "path": "Bauteile/Dioden und Transistoren/NPN Transistor 2.png", "isFolder": false },
+      { "name": "NPN Transistor", "path": "Bauteile/Dioden und Transistoren/NPN Transistor.png", "isFolder": false },
+      { "name": "PNP Transistor 2", "path": "Bauteile/Dioden und Transistoren/PNP Transistor 2.png", "isFolder": false },
+      { "name": "PNP Transistor", "path": "Bauteile/Dioden und Transistoren/PNP Transistor.png", "isFolder": false }
+    ]
+  },
+  {
+    "name": "Lampen und LEDs",
+    "path": "Bauteile/Lampen und LEDs",
+    "isFolder": true,
+    "components": [
+      { "name": "Gluehlampe", "path": "Bauteile/Lampen und LEDs/Gluehlampe.png", "isFolder": false },
+      { "name": "Leuchtdiode", "path": "Bauteile/Lampen und LEDs/Leuchtdiode.png", "isFolder": false }
+    ]
+  },
+  {
+    "name": "Messgeräte",
+    "path": "Bauteile/Messgeräte",
+    "isFolder": true,
+    "components": [
+      { "name": "Amperemeter 2", "path": "Bauteile/Messgeräte/Amperemeter 2.png", "isFolder": false },
+      { "name": "Amperemeter", "path": "Bauteile/Messgeräte/Amperemeter.png", "isFolder": false },
+      { "name": "Leistungsmesser 2", "path": "Bauteile/Messgeräte/Leistungsmesser 2.png", "isFolder": false },
+      { "name": "Leistungsmesser", "path": "Bauteile/Messgeräte/Leistungsmesser.png", "isFolder": false },
+      { "name": "Messgeraet blanko", "path": "Bauteile/Messgeräte/Messgeraet blanko.png", "isFolder": false },
+      { "name": "Ohmmeter 2", "path": "Bauteile/Messgeräte/Ohmmeter 2.png", "isFolder": false },
+      { "name": "Ohmmeter", "path": "Bauteile/Messgeräte/Ohmmeter.png", "isFolder": false },
+      { "name": "Voltmeter 2", "path": "Bauteile/Messgeräte/Voltmeter 2.png", "isFolder": false },
+      { "name": "Voltmeter", "path": "Bauteile/Messgeräte/Voltmeter.png", "isFolder": false }
+    ]
+  },
+  {
+    "name": "Verschiedenes",
+    "path": "Bauteile/Verschiedenes",
+    "isFolder": true,
+    "components": [
+      { "name": "Hupe", "path": "Bauteile/Verschiedenes/Hupe.png", "isFolder": false },
+      { "name": "Kondensator gepolt", "path": "Bauteile/Verschiedenes/Kondensator gepolt.png", "isFolder": false },
+      { "name": "Masse", "path": "Bauteile/Verschiedenes/Masse.png", "isFolder": false },
+      { "name": "Spannungsquelle Wechselstrom", "path": "Bauteile/Verschiedenes/Spannungsquelle Wechselstrom.png", "isFolder": false },
+      { "name": "Spule", "path": "Bauteile/Verschiedenes/Spule.png", "isFolder": false }
+    ]
+  },
+  {
+    "name": "Widerstände",
+    "path": "Bauteile/Widerstände",
+    "isFolder": true,
+    "components": [
+      { "name": "Fotowiderstand (LDR)", "path": "Bauteile/Widerstände/Fotowiderstand (LDR).png", "isFolder": false },
+      { "name": "Heißleiter (NTC)", "path": "Bauteile/Widerstände/Heiß (NTC).png", "isFolder": false },
+      { "name": "Kaltleiter (PTC)", "path": "Bauteile/Widerstände/Kaltleiter (PTC).png", "isFolder": false },
+      { "name": "Potentiometer 2", "path": "Bauteile/Widerstände/Potentiometer 2.png", "isFolder": false },
+      { "name": "Potentiometer", "path": "Bauteile/Widerstände/Potentiometer.png", "isFolder": false }
+    ]
+  }
+]

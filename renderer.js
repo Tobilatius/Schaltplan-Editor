@@ -40,6 +40,9 @@ class CircuitEditor {
         // Geöffnete Ordner
         this.openFolders = new Set();
         
+        // Animation Frame für optimiertes Neuzeichnen
+        this.animationFrameId = null;
+        
         // Text-Mode
         this.textMode = false;
         this.texts = []; // Array für alle Text-Objekte
@@ -269,8 +272,8 @@ class CircuitEditor {
                     this.hasTextMoved = true; // Bewegung stattgefunden
                     this.redraw();
                 } else {
-                    // Nur bei Grid-Wechsel neu zeichnen
-                    this.redraw();
+                    // Nur bei Grid-Wechsel neu zeichnen (optimiert mit requestAnimationFrame)
+                    this.scheduleRedraw();
                 }
             } else if (this.isDragging && this.draggedComponent) {
                 // Drag-Logik auch bei gleicher Grid-Position für flüssiges Drag
@@ -437,10 +440,6 @@ class CircuitEditor {
         // Exakt auf den nächsten Grid-Punkt runden
         const gridX = Math.round(x / this.gridSize) * this.gridSize;
         const gridY = Math.round(y / this.gridSize) * this.gridSize;
-        
-        console.log(`Klick bei (${x}, ${y}) -> Grid bei (${gridX}, ${gridY})`);
-        console.log(`x/gridSize = ${x/this.gridSize}, gerundet = ${Math.round(x/this.gridSize)}`);
-        console.log(`y/gridSize = ${y/this.gridSize}, gerundet = ${Math.round(y/this.gridSize)}`);
         
         return { x: gridX, y: gridY };
     }
@@ -856,8 +855,6 @@ class CircuitEditor {
 
     async placeComponent(gridX, gridY, component) {
         try {
-            console.log(`Platziere Bauteil bei (${gridX}, ${gridY})`);
-            
             // Wenn bereits base64-Daten vorhanden sind (z.B. Fallback aus Browser-Ordner-Picker) verwenden,
             // ansonsten versuchen wir per Fetch relative Pfade zu laden.
             // Priorisiere direkte Pfade (z.B. /Bauteile/foo.png) — ideal für statische Hosts wie GitHub Pages.
@@ -877,23 +874,21 @@ class CircuitEditor {
                    name: component.name
                };
 
-               console.log(`Bauteil erstellt bei (${comp.x}, ${comp.y}) - Mitte bei (${gridX}, ${gridY})`);
-
                this.components.push(comp);
                this.redraw();
                this.saveState(); // Nach Platzierung speichern
             };
+            img.onerror = () => {
+                console.error('Fehler beim Laden des Bildes');
+            };
 
             // Lade-Strategie:
-            // 1) Wenn component.path gesetzt ist, nutzen wir den Pfad (funktioniert auf GitHub Pages).
-            // 2) Ansonsten verwenden wir vorhandene Base64-Daten.
+            // 1) Zuerst base64Data verwenden (wenn vorhanden) - funktioniert für manuell geladene Bauteile
+            // 2) Ansonsten component.path verwenden (funktioniert auf GitHub Pages)
             // 3) Falls noch nichts vorhanden ist, versuchen wir per Fetch Base64 zu erzeugen.
-            if (component.path) {
-                img.src = component.path;
-            } else if (base64Data) {
+            if (base64Data) {
                 img.src = `data:image/png;base64,${base64Data}`;
             } else if (component.path) {
-                // Sollte eigentlich durch erste Abfrage abgedeckt sein, zur Sicherheit handle.
                 img.src = component.path;
             } else {
                 // Letzter Versuch: Base64 per Fetch besorgen
@@ -943,6 +938,15 @@ class CircuitEditor {
             ctx.font = `${fontSize}px Arial`;
             ctx.fillStyle = color;
             ctx.fillText(text, x, y);
+        }
+    }
+
+    scheduleRedraw() {
+        if (this.animationFrameId === null) {
+            this.animationFrameId = requestAnimationFrame(() => {
+                this.redraw();
+                this.animationFrameId = null;
+            });
         }
     }
 
@@ -1918,6 +1922,7 @@ class CircuitEditor {
 						components.push({
 							name: f.name.replace(/\.(png|jpg|jpeg)$/i, ''),
 							path: f.webkitRelativePath || f.name,
+							isFolder: false,
 							base64Data: base64
 						});
 					} catch (err) {
@@ -1932,8 +1937,7 @@ class CircuitEditor {
 				});
 			}
 
-			this.availableComponents = result;
-			this.openFolders.clear();
+			this.availableComponents = [...this.availableComponents, ...result];
 			this.updateComponentList();
 			document.body.removeChild(input);
 			console.log('Bauteile-Ordner (Web-Fallback) geladen');
